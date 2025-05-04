@@ -5,8 +5,6 @@ const authRouter = express.Router();
 
 authRouter
   .route("/login")
-  .post((req: Request, res: Response, next: NextFunction) => {
-    loginValidate(req, res, next);
-  }, loginUser);
+  .post(loginValidate, loginUser);
 
 export default authRouter;

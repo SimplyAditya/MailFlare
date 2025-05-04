@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import userRouter from "./routers/user.routes";
 import authRouter from "./routers/auth.route";
+import appPasswordRouter from "./routers/appPassword.route";
 dotenv.config();
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/appPassword", appPasswordRouter);
 
 app.get("/", (req, res) => {
   res.send(

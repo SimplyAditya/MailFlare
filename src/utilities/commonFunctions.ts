@@ -19,5 +19,9 @@ export const compareText = async (
 };
 
 export const generateToken = async (userId: number): Promise<string> => {
-  return await jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
+  return await jwt.sign({ userId }, JWT_SECRET, { expiresIn: "8h" });
+};
+
+export const decodeToken = async (token: string): Promise<any> => {
+  return await jwt.verify(token, JWT_SECRET);
 };
