@@ -26,24 +26,24 @@ export const getAppPasswordById = async (
 };
 
 export const getAppPasswordByUserId = async (
-    userId: number
+  userId: number
 ): Promise<appPasswords[]> => {
   const appPasswords = await prisma.appPasswords.findMany({
     where: { userId, isDeleted: false },
   });
   return appPasswords;
-}
+};
 
 export const updateAppPassword = async (
-    id: number,
-    data: Partial<appPasswords>
+  id: number,
+  data: Partial<appPasswords>
 ): Promise<appPasswords> => {
   const appPassword = await prisma.appPasswords.update({
     where: { id },
     data: data as any,
   });
-    return appPassword;
-}
+  return appPassword;
+};
 
 export const deleteAppPassword = async (
   id: number

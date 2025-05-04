@@ -27,6 +27,5 @@ export const generateAppPassword = async (
       return appPasswordRecord;
     }
   }
-  const appPasswordRecord = await createAppPassword(email, appPassword, userId);
-  return appPasswordRecord;
+  return await createAppPassword(email, appPassword, userId);
 };

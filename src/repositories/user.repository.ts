@@ -7,18 +7,17 @@ const userSelect = {
   mobile: true,
   name: true,
   createdAt: true,
-  isDeleted: true,
   role: true,
 };
 
 export const createUser = (
   data: Partial<User>
-): Promise<Omit<User, "password">> =>
+): Promise<Omit<User, "password" | "isDeleted">> =>
   prisma.user.create({ data: data as any, select: userSelect });
 
 export const getUserById = (
   id: number
-): Promise<Omit<User, "password"> | null> =>
+): Promise<Omit<User, "password" | "isDeleted"> | null> =>
   prisma.user.findUnique({
     where: { id },
     select: userSelect,
@@ -27,7 +26,7 @@ export const getUserById = (
 export const getUserByEmailOrMobile = (
   email: string,
   mobile: string
-): Promise<Omit<User, "password"> | null> =>
+): Promise<Omit<User, "password" | "isDeleted"> | null> =>
   prisma.user.findFirst({
     where: {
       OR: [{ email }, { mobile }],
@@ -45,7 +44,9 @@ export const getCompleteUserByEmailOrMobile = (
     },
   });
 
-export const getAllUsers = (): Promise<Omit<User, "password">[]> =>
+export const getAllUsers = (): Promise<
+  Omit<User, "password" | "isDeleted">[]
+> =>
   prisma.user.findMany({
     where: { isDeleted: false },
     select: userSelect,
@@ -54,14 +55,16 @@ export const getAllUsers = (): Promise<Omit<User, "password">[]> =>
 export const updateUser = (
   id: number,
   data: Partial<User>
-): Promise<Omit<User, "password">> =>
+): Promise<Omit<User, "password" | "isDeleted">> =>
   prisma.user.update({
     where: { id },
     data: data as any,
     select: userSelect,
   });
 
-export const deleteUser = (id: number): Promise<Omit<User, "password">> =>
+export const deleteUser = (
+  id: number
+): Promise<Omit<User, "password" | "isDeleted">> =>
   prisma.user.update({
     where: { id },
     data: { isDeleted: true },

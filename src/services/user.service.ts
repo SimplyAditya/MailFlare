@@ -3,7 +3,7 @@ import * as repo from "../repositories/user.repository";
 
 export const generateUser = async (
   data: Partial<User>
-): Promise<Omit<User, "password">> => {
+): Promise<Omit<User, "password" | "isDeleted">> => {
   const existingUser = await repo.getUserByEmailOrMobile(
     data.email,
     data.mobile
