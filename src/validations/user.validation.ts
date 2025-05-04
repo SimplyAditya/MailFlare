@@ -8,7 +8,7 @@ export const newUser = Joi.object({
 });
 
 export const getUserById = Joi.object({
-  id: Joi.number().integer().required() ,
+  id: Joi.number().integer().required(),
 });
 
 export const getUserByEmail = Joi.object({
