@@ -12,6 +12,7 @@ model User {
   name          String
   id            Int             @id @default(autoincrement())
   email         String          @unique
+  mobile        String          @unique
   password      String
   createdAt     DateTime        @default(now())
   isDeleted     Boolean         @default(false)
