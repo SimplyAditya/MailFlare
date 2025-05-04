@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  name          String
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  createdAt     DateTime        @default(now())
+  isDeleted     Boolean         @default(false)
+  role          Role            @default(USER)
+  appPasswords  appPasswords[]
+  mailTemplates mailTemplates[]
+}
+
+model appPasswords {
+  id        Int     @id @default(autoincrement())
+  email     String
+  password  String
+  userId    Int
+  isDeleted Boolean @default(false)
+  User      User    @relation(fields: [userId], references: [id])
+}
+
+model mailTemplates {
+  id        Int      @id @default(autoincrement())
+  subject   String
+  body      String
+  userId    Int
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
