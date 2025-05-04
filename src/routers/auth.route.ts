@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import { loginValidate } from "../middlewares/validation";
 import { loginUser } from "../controllers/auth.controller";
 const authRouter = express.Router();

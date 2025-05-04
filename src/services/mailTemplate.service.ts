@@ -1,7 +1,8 @@
 import { mailTemplates } from "../generated/prisma";
 import {
   createMailTemplate,
-  getMailTemplateByUserId,
+  getMailTemplateByUserId as repoGetMailTemplateByUserId,
+  getMailTemplateById as repoGetMailTemplateById,
   updateMailTemplate,
 } from "../repositories/mailTemplate.repository";
 
@@ -23,4 +24,24 @@ export const generateMailTemplate = async (
     });
   }
   return await createMailTemplate(subject, body, userId);
+};
+
+export const getMailTemplateByUserId = async (
+  userId: number
+): Promise<Omit<mailTemplates[], "isDeleted">> => {
+  const mailTemplate = await repoGetMailTemplateByUserId(userId);
+  if (!mailTemplate) {
+    throw new Error("Mail template not found");
+  }
+  return mailTemplate;
+};
+
+export const getMailTemplateById = async (
+  id: number
+): Promise<mailTemplates | null> => {
+  const mailTemplate = await repoGetMailTemplateById(id);
+  if (!mailTemplate) {
+    throw new Error("Mail template not found");
+  }
+  return mailTemplate;
 };

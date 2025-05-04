@@ -1,0 +1,1 @@
+{"version":3,"file":"mailTemplate.validation.js","sourceRoot":"","sources":["../../src/validations/mailTemplate.validation.ts"],"names":[],"mappings":";;;;;;AAAA,8CAAsB;AAET,QAAA,eAAe,GAAG,aAAG,CAAC,MAAM,CAAC;IACxC,OAAO,EAAE,aAAG,CAAC,MAAM,EAAE,CAAC,QAAQ,EAAE;IAChC,IAAI,EAAE,aAAG,CAAC,MAAM,EAAE,CAAC,QAAQ,EAAE;CAC9B,CAAC,CAAC"}

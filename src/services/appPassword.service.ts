@@ -1,7 +1,8 @@
 import { appPasswords } from "../generated/prisma";
 import {
   createAppPassword,
-  getAppPasswordByUserId,
+  getAppPasswordByUserId as repoGetAppPasswordByUserId,
+  getAppPasswordById as repoGetAppPasswordById,
   updateAppPassword,
 } from "../repositories/appPassword.repository";
 
@@ -10,7 +11,7 @@ export const generateAppPassword = async (
   email: string,
   appPassword: string
 ): Promise<appPasswords> => {
-  const existingAppPassword = await getAppPasswordByUserId(userId);
+  const existingAppPassword = await repoGetAppPasswordByUserId(userId);
   existingAppPassword.filter(
     (existingAppPasswordRecord) =>
       existingAppPasswordRecord.email === email &&
@@ -28,4 +29,24 @@ export const generateAppPassword = async (
     }
   }
   return await createAppPassword(email, appPassword, userId);
+};
+
+export const getAppPasswordByUserId = async (
+  userId: number
+): Promise<Array<Pick<appPasswords, "id" | "email" | "userId">>> => {
+  const appPasswords = await repoGetAppPasswordByUserId(userId);
+  if (!appPasswords || appPasswords.length === 0) {
+    throw new Error("App password not found");
+  }
+  return appPasswords.map(({ id, email, userId }) => ({ id, email, userId }));
+};
+
+export const getAppPasswordById = async (
+  id: number
+): Promise<appPasswords | null> => {
+  const appPassword = await repoGetAppPasswordById(id);
+  if (!appPassword) {
+    throw new Error("App password not found");
+  }
+  return appPassword;
 };

@@ -27,7 +27,7 @@ export const getMailTemplateById = async (
 
 export const getMailTemplateByUserId = async (
   userId: number
-): Promise<mailTemplates[]> => {
+): Promise<Omit<mailTemplates[], "isDeleted">> => {
   const mailTemplatesList = await prisma.mailTemplates.findMany({
     where: { userId },
   });
