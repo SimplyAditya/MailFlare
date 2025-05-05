@@ -3,6 +3,7 @@ import { newUser } from "../validations/user.validation";
 import { loginUser } from "../validations/auth.validation";
 import { newAppPassword } from "../validations/appPassword.validation";
 import { newMailTemplate } from "../validations/mailTemplate.validation";
+import { sendEmail } from "../validations/sendMail.validation";
 
 export const createUserValidate = async (
   req: Request,
@@ -64,6 +65,32 @@ export const createMailTemplateValidate = async (
     return;
   }
   const { error } = await newMailTemplate.validate(req.body);
+  if (error) {
+    res.status(400).json({
+      message: "Validation error",
+      error: error.details.map((err) => ({
+        field: err.path[0],
+        message: err.message,
+      })),
+    });
+    return;
+  }
+  next();
+};
+
+
+export const sendEmailValidate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  if (!req.body) {
+    res.status(400).json({
+      message: "Request body is required",
+    });
+    return;
+  }
+  const { error } = await sendEmail.validate(req.body);
   if (error) {
     res.status(400).json({
       message: "Validation error",

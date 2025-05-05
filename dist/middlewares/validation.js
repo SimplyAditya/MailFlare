@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginValidate = exports.createMailTemplateValidate = exports.createAppPasswordValidate = exports.createUserValidate = void 0;
+exports.loginValidate = exports.sendEmailValidate = exports.createMailTemplateValidate = exports.createAppPasswordValidate = exports.createUserValidate = void 0;
 const user_validation_1 = require("../validations/user.validation");
 const auth_validation_1 = require("../validations/auth.validation");
 const appPassword_validation_1 = require("../validations/appPassword.validation");
 const mailTemplate_validation_1 = require("../validations/mailTemplate.validation");
+const sendMail_validation_1 = require("../validations/sendMail.validation");
 const createUserValidate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.body) {
         return res.status(400).json({
@@ -75,6 +76,27 @@ const createMailTemplateValidate = (req, res, next) => __awaiter(void 0, void 0,
     next();
 });
 exports.createMailTemplateValidate = createMailTemplateValidate;
+const sendEmailValidate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.body) {
+        res.status(400).json({
+            message: "Request body is required",
+        });
+        return;
+    }
+    const { error } = yield sendMail_validation_1.sendEmail.validate(req.body);
+    if (error) {
+        res.status(400).json({
+            message: "Validation error",
+            error: error.details.map((err) => ({
+                field: err.path[0],
+                message: err.message,
+            })),
+        });
+        return;
+    }
+    next();
+});
+exports.sendEmailValidate = sendEmailValidate;
 const loginValidate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.body) {
         res.status(400).json({

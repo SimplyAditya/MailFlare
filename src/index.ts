@@ -4,6 +4,7 @@ import userRouter from "./routers/user.routes";
 import authRouter from "./routers/auth.route";
 import appPasswordRouter from "./routers/appPassword.route";
 import mailTemplateRouter from "./routers/mailTemplate.router";
+import sendEmailRouter from "./routers/sendEmail.route";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/appPassword", appPasswordRouter);
 app.use("/api/v1/mailTemplate", mailTemplateRouter);
+app.use("/api/v1/sendEmail", sendEmailRouter);
 
 app.get("/", (req, res) => {
   res.send(

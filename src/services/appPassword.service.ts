@@ -12,17 +12,17 @@ export const generateAppPassword = async (
   appPassword: string
 ): Promise<appPasswords> => {
   const existingAppPassword = await repoGetAppPasswordByUserId(userId);
-  existingAppPassword.filter(
+  const updatedList = existingAppPassword.filter(
     (existingAppPasswordRecord) =>
       existingAppPasswordRecord.email === email &&
       existingAppPasswordRecord.password === appPassword
   );
-  if (existingAppPassword.length > 0) {
-    if (existingAppPassword[0].isDeleted === false) {
+  if (updatedList.length > 0) {
+    if (updatedList[0].isDeleted === false) {
       throw new Error("App password already exists");
-    } else if (existingAppPassword[0].isDeleted === true) {
+    } else if (updatedList[0].isDeleted === true) {
       const appPasswordRecord = await updateAppPassword(
-        existingAppPassword[0].id,
+        updatedList[0].id,
         { email, password: appPassword, isDeleted: false }
       );
       return appPasswordRecord;

@@ -13,14 +13,14 @@ exports.getAppPasswordById = exports.getAppPasswordByUserId = exports.generateAp
 const appPassword_repository_1 = require("../repositories/appPassword.repository");
 const generateAppPassword = (userId, email, appPassword) => __awaiter(void 0, void 0, void 0, function* () {
     const existingAppPassword = yield (0, appPassword_repository_1.getAppPasswordByUserId)(userId);
-    existingAppPassword.filter((existingAppPasswordRecord) => existingAppPasswordRecord.email === email &&
+    const updatedList = existingAppPassword.filter((existingAppPasswordRecord) => existingAppPasswordRecord.email === email &&
         existingAppPasswordRecord.password === appPassword);
-    if (existingAppPassword.length > 0) {
-        if (existingAppPassword[0].isDeleted === false) {
+    if (updatedList.length > 0) {
+        if (updatedList[0].isDeleted === false) {
             throw new Error("App password already exists");
         }
-        else if (existingAppPassword[0].isDeleted === true) {
-            const appPasswordRecord = yield (0, appPassword_repository_1.updateAppPassword)(existingAppPassword[0].id, { email, password: appPassword, isDeleted: false });
+        else if (updatedList[0].isDeleted === true) {
+            const appPasswordRecord = yield (0, appPassword_repository_1.updateAppPassword)(updatedList[0].id, { email, password: appPassword, isDeleted: false });
             return appPasswordRecord;
         }
     }

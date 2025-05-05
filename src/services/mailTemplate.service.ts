@@ -12,13 +12,13 @@ export const generateMailTemplate = async (
   userId: number
 ): Promise<mailTemplates> => {
   const existingMailTemplate = await getMailTemplateByUserId(userId);
-  existingMailTemplate.filter(
+  const updatedList = existingMailTemplate.filter(
     (existingMailTemplateRecord) =>
       existingMailTemplateRecord.subject === subject &&
       existingMailTemplateRecord.body === body
   );
-  if (existingMailTemplate.length > 0) {
-    return await updateMailTemplate(existingMailTemplate[0].id, {
+  if (updatedList.length > 0) {
+    return await updateMailTemplate(updatedList[0].id, {
       body,
       subject,
     });

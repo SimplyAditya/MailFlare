@@ -13,10 +13,10 @@ exports.getMailTemplateById = exports.getMailTemplateByUserId = exports.generate
 const mailTemplate_repository_1 = require("../repositories/mailTemplate.repository");
 const generateMailTemplate = (subject, body, userId) => __awaiter(void 0, void 0, void 0, function* () {
     const existingMailTemplate = yield (0, exports.getMailTemplateByUserId)(userId);
-    existingMailTemplate.filter((existingMailTemplateRecord) => existingMailTemplateRecord.subject === subject &&
+    const updatedList = existingMailTemplate.filter((existingMailTemplateRecord) => existingMailTemplateRecord.subject === subject &&
         existingMailTemplateRecord.body === body);
-    if (existingMailTemplate.length > 0) {
-        return yield (0, mailTemplate_repository_1.updateMailTemplate)(existingMailTemplate[0].id, {
+    if (updatedList.length > 0) {
+        return yield (0, mailTemplate_repository_1.updateMailTemplate)(updatedList[0].id, {
             body,
             subject,
         });
